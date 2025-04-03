@@ -16,6 +16,7 @@ FLY_CLI_VERSION=$(cat docker-compose.yml |grep "image: concourse/concourse" | cu
 
 OS=$(echo "$(uname -s)" | awk '{print tolower($0)}')
 
+echo "install fly"
 # Replace fly if the version does not match the docker image
 if ! command -v fly || [ $(fly -v) != ${FLY_CLI_VERSION} ]; then
     wget -O ${TMPDIR}/fly.tgz https://github.com/concourse/concourse/releases/download/v${FLY_CLI_VERSION}/fly-${FLY_CLI_VERSION}-${OS}-amd64.tgz
