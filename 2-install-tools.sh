@@ -12,7 +12,7 @@ echo "Temp dir is ${TMPDIR}"
 
 
 CREDHUB_CLI_VERSION=2.9.39
-FLY_CLI_VERSION=$(cat docker-compose.yml |grep "image: concourse/concourse" | cut -d ":" -f3)
+FLY_CLI_VERSION=$(cat docker-compose.yml |grep "image: concourse/concourse" | cut -d ":" -f3 | tail -n 1)
 
 OS=$(echo "$(uname -s)" | awk '{print tolower($0)}')
 
