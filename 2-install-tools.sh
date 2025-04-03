@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
+   echo "This script must be run as root"
    exit 1
 fi
 
@@ -11,7 +11,7 @@ TMPDIR=$(mktemp -d) || exit 1
 echo "Temp dir is ${TMPDIR}"
 
 
-CREDHUB_CLI_VERSION=2.6.2
+CREDHUB_CLI_VERSION=2.9.39
 FLY_CLI_VERSION=$(cat docker-compose.yml |grep "image: concourse/concourse" | cut -d ":" -f3)
 
 OS=$(echo "$(uname -s)" | awk '{print tolower($0)}')
