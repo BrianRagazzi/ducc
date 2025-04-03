@@ -35,7 +35,7 @@ fi
 echo "$(mc -v)"
 
 if ! command -v credhub; then
-    wget -O ${TMPDIR}/credhub.tgz https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/${CREDHUB_CLI_VERSION}/credhub-${OS}-${CREDHUB_CLI_VERSION}.tgz
+    wget -O ${TMPDIR}/credhub.tgz https://github.com/cloudfoundry/credhub-cli/releases/download/${CREDHUB_CLI_VERSION}/credhub-${OS}-amd64-${CREDHUB_CLI_VERSION}.tgz
     tar xvfz ${TMPDIR}/credhub.tgz -C${TMPDIR}/
     rm ${TMPDIR}/credhub.tgz
     chmod +x ${TMPDIR}/credhub
