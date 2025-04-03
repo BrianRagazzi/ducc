@@ -32,11 +32,7 @@ The most lightweight setup for DUCC is to simply run directly using Docker howev
    - Running `source 1-vars.sh` to manually set the variables.
 - To run in the background run `docker-compose up -d`. From now on standard docker-compose commands can be used to stop and start the deployment.
 
-### Vagrant setup steps:
-- (option) modify the CPU, MEM & DISK variables in `Vagrantfile` as required.
-- Run `vagrant up` to start the DUCC VM. From now on standard vagrant commands can be used to start/stop/suspend/destroy the VM.
 
-NOTE: to proceed with post-setup steps and accessing logs/diagnositcs in the vagrant DUCC VM you need to ssh into the vagrant VM using `vagrant ssh`
 
 ### Common post-setup steps:
 - (Optional) Run `2-install-tools.sh` to install the necessary cli tools.
@@ -66,9 +62,9 @@ If using Concourse heavily with large resources, then the Docker volumes will co
 It's possible to run offline, but an internet connected system running Docker is required to prepare the images.
 - The prepare credhub script must be run on the internet connected machine.
 - All the Docker images must be pulled onto an internet connected machine and then either pushed to a on-prem registry or manually moved to the Docker host.
-     To manually move use `docker save` to generate a tar archive of each image. 
+     To manually move use `docker save` to generate a tar archive of each image.
      Images should transported to the target Docker host and use `docker load` to add images to the local Docker cache.
-- 'docker-compose.yml' should be updated to reflect the new image location and/or tags images. 
+- 'docker-compose.yml' should be updated to reflect the new image location and/or tags images.
 
 ### Downloaded Docker Images
 The following images are needed, with the tags being available in `docker-compose.yml`.
@@ -77,4 +73,3 @@ The following images are needed, with the tags being available in `docker-compos
 - minio/minio
 - postgres
 - pcfseceng/credhub
-
