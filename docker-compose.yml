@@ -2,7 +2,7 @@ version: '3'
 
 services:
   uaa: # new
-    image: cloudfoundry/uaa:76.2.0
+    image: cloudfoundry/uaa:76.31.0 #cloudfoundry/uaa:76.2.0
     ports:
       - 8008:8080
     volumes:
@@ -10,15 +10,15 @@ services:
       - ./config/uaa/log4j2.properties:/workspace/WEB-INF/classes/log4j2.properties
     entrypoint: /bin/bash -c
     command:
-      - "cp /import/uaa.yml /workspace/uaa.yml && 
+      - "cp /import/uaa.yml /workspace/uaa.yml &&
         sed -i 's/((credhub_client_secret))/${DUCC_CREDHUB_CLIENT_SECRET}/g' /workspace/uaa.yml &&
-        /cnb/process/web" 
+        /cnb/process/web"
     environment:
       UAA_CONFIG_FILE: /workspace/uaa.yml
       BPL_TOMCAT_ACCESS_LOGGING: enabled
 
   credhub:
-    image: pcfseceng/credhub:2.12.20
+    image: pcfseceng/credhub:2.12.60 #pcfseceng/credhub:2.12.20
     depends_on: [uaa]
     links:
       - uaa
@@ -32,7 +32,7 @@ services:
       SUBJECT_ALTERNATIVE_NAMES: DNS:localhost, IP:127.0.0.1, DNS:credhub
 
   concourse-db:
-    image: postgres:15.2-alpine3.17
+    image: postgres:15.12-alpine3.21 #postgres:15.2-alpine3.17
     shm_size: 1gb
     environment:
       POSTGRES_DB: concourse
@@ -41,7 +41,7 @@ services:
       PGDATA: /database
 
   concourse-web:
-    image: concourse/concourse:7.9.1
+    image: concourse/concourse:7.11.2 #concourse/concourse:7.9.1
     command: web
     # privileged: true
     depends_on: [concourse-db, credhub]
@@ -65,7 +65,7 @@ services:
       CONCOURSE_CREDHUB_INSECURE_SKIP_VERIFY: "true"
       CONCOURSE_CREDHUB_CLIENT_ID: credhub_client
       CONCOURSE_CREDHUB_CLIENT_SECRET: ${DUCC_CREDHUB_CLIENT_SECRET}
-      
+
       CONCOURSE_ENABLE_PIPELINE_INSTANCES: "true"
       CONCOURSE_ENABLE_ACROSS_STEP: "true"
       CONCOURSE_ENABLE_CACHE_STREAMED_VOLUMES: "true"
@@ -73,14 +73,14 @@ services:
       CONCOURSE_RUNTIME: containerd
 
   concourse-worker:
-    image: concourse/concourse:7.9.1
+    image: concourse/concourse:7.11.2 #concourse/concourse:7.9.1
     command: worker
     privileged: true
     depends_on: [concourse-web]
     ports:
     - 7777:7777
     - 7788:7788
-    volumes: 
+    volumes:
       - "./hack/keys:/concourse-keys"
     stop_signal: SIGUSR2
     environment:
@@ -106,9 +106,9 @@ services:
 
   minio:
     image: minio/minio
-    
+
     volumes:
-      - "${DUCC_MINIO_PATH}:/data" # This depends on a 
+      - "${DUCC_MINIO_PATH}:/data" # This depends on a
     ports:
       - "9080:9000"
       - "9081:9081"
